@@ -59,11 +59,17 @@ public class FileServiceImpl implements FileService {
             Scanner scanner = new Scanner(file);
             StringBuilder contentBuilder = new StringBuilder();
             while (scanner.hasNextLine()) {
-                contentBuilder.append(scanner.nextLine());
+                contentBuilder.append(scanner.nextLine());  //loop reads in the input data line-by-line
             }
             scanner.close();
             JsonNode rootNode = objectMapper.readTree(contentBuilder.toString());
+
+            //This line converts the JSON-formatted string stored
+            // in contentBuilder into a JsonNode object using an ObjectMapper
             Map<String, String> records = objectMapper.convertValue(rootNode, new TypeReference<Map<String, String>>() {});
+           //This line converts the JsonNode object rootNode into a Map object called records,
+            // where the keys are strings and the values are also strings.
+
             if (records.containsKey(recordKey)) {
                 return records.get(recordKey);
             } else {
