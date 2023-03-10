@@ -18,8 +18,9 @@ public class FileServiceImpl implements FileService {
     @Override
     public String writeToFile(String input) {
         try {
-            File file = new File("C:\\Users\\Admin\\Desktop/output1.txt");
-            FileWriter fileWriter = new FileWriter(file, true);
+            File file = new File("new.txt"); //represents a file on the system with the specified path
+            FileWriter fileWriter = new FileWriter(file, true); // writes character data to the specified file, true arg means
+                                                                        // filewriter append the file if content already exist
             if(!file.exists()){
                 file.createNewFile();
                 System.out.println("New file created");
@@ -53,19 +54,19 @@ public class FileServiceImpl implements FileService {
     }
 
     public String readRecordFromFile(String fileName, String recordKey) {
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = new ObjectMapper();  //converting JSON data to and from Java objects.
         try {
             File file = new File(fileName);
             Scanner scanner = new Scanner(file);
-            StringBuilder contentBuilder = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             while (scanner.hasNextLine()) {
-                contentBuilder.append(scanner.nextLine());  //loop reads in the input data line-by-line
+                sb.append(scanner.nextLine());  //loop reads in the input data line-by-line
             }
             scanner.close();
-            JsonNode rootNode = objectMapper.readTree(contentBuilder.toString());
+            JsonNode rootNode = objectMapper.readTree(sb.toString());
 
             //This line converts the JSON-formatted string stored
-            // in contentBuilder into a JsonNode object using an ObjectMapper
+            // in sb into a JsonNode object using an ObjectMapper
             Map<String, String> records = objectMapper.convertValue(rootNode, new TypeReference<Map<String, String>>() {});
            //This line converts the JsonNode object rootNode into a Map object called records,
             // where the keys are strings and the values are also strings.
@@ -78,7 +79,7 @@ public class FileServiceImpl implements FileService {
         } catch (FileNotFoundException e) {
             return "File not found!";
         } catch (IOException e) {
-            return "Error reading file!";
+            return " getting Error while reading file!";
         }
     }
 }
