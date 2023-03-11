@@ -74,7 +74,7 @@ public class FileServiceImpl implements FileService {
             if (records.containsKey(recordKey)) {
                 return records.get(recordKey);
             } else {
-                return "Record not found!";
+                return "Record not found!";  //for error
             }
         } catch (FileNotFoundException e) {
             return "File not found!";
