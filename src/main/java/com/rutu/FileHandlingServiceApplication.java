@@ -8,7 +8,7 @@ public class FileHandlingServiceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(FileHandlingServiceApplication.class, args);
-		System.out.println("App started");
+		System.out.println(" file handling App started");
 	}
 
 }
