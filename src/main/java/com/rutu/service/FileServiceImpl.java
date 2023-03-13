@@ -1,9 +1,6 @@
 package com.rutu.service;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Map;
 import java.util.Scanner;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -12,27 +9,34 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 
+
+
 @Service
 public class FileServiceImpl implements FileService {
 
+    private Writer writer;
+
     @Override
-    public String writeToFile(String input) {
+    public boolean writeToFile(String input) {
+
+
         try {
-            File file = new File("new.txt"); //represents a file on the system with the specified path
+            File file = new File("new1.txt"); //represents a file on the system with the specified path
             FileWriter fileWriter = new FileWriter(file, true); // writes character data to the specified file, true arg means
                                                                         // filewriter append the file if content already exist
             if(!file.exists()){
                 file.createNewFile();
                 System.out.println("New file created");
             }
-            fileWriter.write(input);
-            fileWriter.close();
+            BufferedWriter bw = new BufferedWriter(writer);
+            bw.write(input);
+            bw.close();
             System.out.println("Successfully wrote to file.");
-            return "Successfully wrote to file.";
+            return true;
         } catch (IOException e) {
             System.out.println("An error occurred while writing to file.");
             e.printStackTrace();
-            return "An error occurred while writing to file.";
+            return false;
         }
     }
 
